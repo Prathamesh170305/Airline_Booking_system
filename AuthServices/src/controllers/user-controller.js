@@ -18,11 +18,11 @@ const create =async(req , res)=>{
     } catch (error) {
         console.log('something went wrong in the controller layer');
         console.log(error);
-        return res.status(500).json({
-            message:'Something went wrong in controller',
+        return res.status(error.statusCode).json({
+            message:error.message,
             data:{},
             success:false,
-            err:error
+            err:error.explanation
         })
     }  
 }
@@ -38,9 +38,9 @@ const signIn=async(req,res)=>{
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
-            message:'Something went wrong',
-            data:{},
+        return res.status(error.statusCode).json({
+            message:error.message,
+            data:error.explanation,
             success:false,
             err:error
         });

@@ -13,6 +13,9 @@ class UserService {
             const user = await this.userRepository.create(data);
             return user;
         } catch (error) {
+            if(error.name=='SequelizeValidationError'){
+                throw error;
+            }
             console.log('something went wrong in the service layer');
             throw error;
         }
@@ -33,6 +36,9 @@ class UserService {
             const newJWT=this.createToken({email:user.email,id:user.id});
             return newJWT;
         } catch (error) {
+            if(error.name=='AttributeNotFound'){
+                throw error;
+            }
             console.log('something went wrong in the service layer in signIn');
             throw error;
         }
